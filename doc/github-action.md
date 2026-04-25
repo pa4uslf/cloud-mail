@@ -16,7 +16,7 @@
 | `R2_BUCKET_NAME`        |  ✅  | 您的 R2 存储桶的名称                                    |
 | `DOMAIN`                |  ✅  | 您要用于邮件服务的域名（例如 `["xx.xx"]，多域名用,分隔`）        |
 | `ADMIN`                 |  ✅  | 您的管理员邮箱地址（例如 `admin@example.com`）      |
-| `JWT_SECRET`            |  ✅  | 用于生成和验证 JWT 的随机长字符串                     |
+| `JWT_SECRET`            |  ✅  | 用于生成和验证 JWT 的高强度随机长字符串，建议只放在 Secrets，不要放在公开变量中 |
 | `INIT_URL`              |  ❌  | （可选）部署后用于初始化数据库的 Worker URL（格式参考下述手动初始化）           |
 
 ---
@@ -28,6 +28,16 @@
 3. 选择"编辑 Cloudflare Workers"模板，并参照下表添加相应权限
    ![dc2e1dc8dcd217644759c46c6c705de1](https://i.miji.bid/2025/07/07/dc2e1dc8dcd217644759c46c6c705de1.png)
 4. 保存令牌并复制到 GitHub Secrets 中的 `CLOUDFLARE_API_TOKEN`
+
+**生成 JWT_SECRET**
+
+在本机执行以下命令生成随机值，然后保存到 GitHub Secrets 的 `JWT_SECRET`：
+
+```bash
+openssl rand -base64 48
+```
+
+不要复用 `wrangler-dev.toml` 或 `wrangler-test.toml` 中的本地占位值。
 
 **获取 Cloudflare 账户 ID**
 1. 账户 ID 可以在 Cloudflare 仪表盘的账户设置中找到。
